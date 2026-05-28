@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services | Professional Technical Solutions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        /* --- BRAND DESIGN TOKENS --- */
+        :root {
+            --primary-blue: #007AFF;
+            --primary-hover: #0056b3;
+            --facebook-blue: #1877F2;
+            --bg-light: #fcfcfc;
+            --text-main: #333;
+            --text-heading: #1a1a1a;
+            --text-muted: #666;
+            --header-shadow: 0 2px 15px rgba(0, 0, 0, 0.04);
+            --card-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg-light); color: var(--text-main); overflow-x: hidden; scroll-behavior: smooth; }
+
+        /* Global Icon Fix */
+        .lucide { width: 100%; height: 100%; }
+
+        /* --- HEADER --- */
+        .main-header {
+            background-color: #ffffff;
+            min-height: 80px; 
+            box-shadow: var(--header-shadow);
+            position: sticky; top: 0; z-index: 1000;
+            display: flex; align-items: center;
+            padding: 10px 0;
+        }
+
+        .header-container {
+            max-width: 1400px; margin: 0 auto; width: 100%;
+            display: flex; align-items: center; justify-content: space-between; padding: 0 20px;
+        }
+
+        .logo img { height: 60px; width: auto; display: block; object-fit: contain; }
+        @media (min-width: 768px) { .logo img { height: 85px; } }
+
+        .nav-links { display: none; }
+        @media (min-width: 1024px) {
+            .nav-links { display: block; }
+            .nav-links ul { list-style: none; display: flex; gap: 40px; }
+            .nav-links a { 
+                text-decoration: none; color: #222; font-weight: 600; font-size: 15px; 
+                transition: color 0.3s; position: relative; padding: 10px 0; 
+            }
+            .nav-links a:hover { color: var(--primary-blue); }
+            
+            /* Home Active Highlight with Underscore */
+            .nav-links a.active { color: var(--primary-blue); }
+            .nav-links a.active::after {
+                content: ''; position: absolute; bottom: -2px; left: 0; width: 100%;
+                height: 4px; background: var(--primary-blue); border-radius: 10px;
+            }
+        }
+
+        .header-actions { display: flex; align-items: center; gap: 15px; }
+        .menu-toggle { display: block; background: none; border: none; cursor: pointer; color: #333; padding: 5px; }
+        @media (min-width: 1024px) { .menu-toggle { display: none; } }
+
+        /* --- SMOOTH HARDWARE-ACCELERATED MOBILE NAV --- */
+        .mobile-nav { 
+            position: fixed; 
+            top: 0; 
+            right: 0; 
+            width: 280px; 
+            height: 100vh; 
+            background: white; 
+            z-index: 2000; 
+            padding: 40px 30px; 
+            box-shadow: -10px 0 30px rgba(0,0,0,0.05); 
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); 
+        }
+        .mobile-nav.active { 
+            transform: translateX(0); 
+        }
+        .mobile-nav ul { list-style: none; margin-top: 40px; }
+        .mobile-nav li { margin-bottom: 20px; }
+        .mobile-nav a { 
+            text-decoration: none; 
+            color: #1a1a1a; 
+            font-size: 18px; 
+            font-weight: 700; 
+            display: inline-block;
+            position: relative;
+            padding-bottom: 4px;
+        }
+        .mobile-nav a.active { color: var(--primary-blue); }
+        .mobile-nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary-blue);
+            border-radius: 10px;
+        }
+        
+        .close-mobile { 
+            position: absolute; top: 25px; right: 25px; background: #f5f5f5; border: none; 
+            width: 36px; height: 36px; border-radius: 50%; cursor: pointer; color: #666; 
+            display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 400;
+            transition: var(--transition);
+        }
+        .close-mobile:hover { background: #eef2f6; color: #111; transform: scale(1.05); }
+
+        .overlay-bg { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(0,0,0,0.4); 
+            backdrop-filter: blur(2px); 
+            z-index: 1500; 
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), visibility 0.4s;
+        }
+        .overlay-bg.active { 
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* --- HERO BANNER (CONTAINED) --- */
+        .hero-banner {
+            max-width: 1100px;
+            width: 92%;
+            margin: 40px auto 60px auto;
+            aspect-ratio: 16 / 9;
+            background: url('https://i.imgur.com/4CryES0.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            position: relative;
+            pointer-events: none;
+        }
+
+        /* --- SERVICES WRAPPER --- */
+        .services-wrapper { max-width: 1100px; margin: 0 auto 80px auto; padding: 0 20px; }
+        .section-header { margin-bottom: 60px; text-align: center; }
+        .section-eyebrow { display: block; text-transform: uppercase; color: var(--primary-blue); font-weight: 700; font-size: 12px; letter-spacing: 2px; margin-bottom: 12px; }
+        .section-header h2 { font-size: 32px; font-weight: 800; color: var(--text-heading); letter-spacing: -1px; }
+        @media (min-width: 768px) { .section-header h2 { font-size: 48px; } }
+
+        .service-list { display: flex; flex-direction: column; gap: 30px; }
+
+        .service-row {
+            background: #ffffff;
+            border-radius: 24px;
+            border: 1px solid rgba(0,0,0,0.05);
+            box-shadow: var(--card-shadow);
+            display: grid;
+            grid-template-columns: 1fr;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        @media (min-width: 900px) {
+            .service-row { grid-template-columns: 280px 1fr; }
+        }
+
+        .service-row:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0, 122, 255, 0.06);
+            border-color: rgba(0, 122, 255, 0.1);
+        }
+
+        .service-name-col {
+            background: linear-gradient(135deg, #ffffff 0%, #f9fbff 100%);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border-bottom: 1px solid #f2f2f2;
+        }
+        @media (min-width: 900px) {
+            .service-name-col { border-bottom: none; border-right: 1px solid #f2f2f2; }
+        }
+
+        .row-icon {
+            width: 56px; height: 56px;
+            background: white;
+            border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--primary-blue);
+            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.1);
+            margin-bottom: 15px;
+        }
+
+        .row-title { font-size: 18px; font-weight: 700; color: var(--text-heading); line-height: 1.3; }
+
+        .service-desc-col {
+            padding: 35px;
+            display: flex;
+            flex-direction: row;
+            gap: 30px;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .service-desc-col { flex-direction: column-reverse; align-items: flex-start; }
+        }
+
+        .desc-text-box { flex: 1; }
+
+        .row-description {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+
+        .feature-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+        .tag {
+            background: #f4f8ff;
+            color: var(--primary-blue);
+            padding: 5px 12px;
+            border-radius: 100px;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .view-details-btn {
+            background: #f8f9fa; color: #555; border: 1px solid #eee; padding: 10px 24px; border-radius: 10px; 
+            font-size: 12px; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: 0.3s;
+        }
+        .view-details-btn:hover { background: var(--primary-blue); color: #fff; border-color: var(--primary-blue); }
+
+        .service-thumb-minimal {
+            width: 140px;
+            height: 140px;
+            flex-shrink: 0;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 4px solid #fff;
+            position: relative;
+        }
+        @media (max-width: 768px) {
+            .service-thumb-minimal { width: 100%; height: 160px; }
+        }
+        .service-thumb-minimal img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: opacity 0.8s ease-in-out;
+            cursor: zoom-in;
+        }
+
+        /* --- MODERNIZED HIGH-END 3-COLUMN FOOTER --- */
+        .main-footer {
+            background-color: #ffffff;
+            border-top: 1px solid #eee;
+            padding: 60px 0 30px 0;
+            margin-top: 60px;
+            position: relative;
+        }
+        @media (min-width: 768px) { .main-footer { padding: 100px 0 40px 0; margin-top: 100px; } }
+
+        .footer-container {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+        @media (min-width: 640px) { .footer-container { grid-template-columns: 1fr 1fr; } }
+        @media (min-width: 1024px) { .footer-container { grid-template-columns: 1.5fr 1fr 1.5fr 1.2fr; gap: 40px; } }
+
+        .footer-logo img { height: 60px; margin-bottom: 25px; }
+        @media (min-width: 768px) { .footer-logo img { height: 80px; } }
+
+        .footer-about-text { color: var(--text-muted); font-size: 14px; line-height: 1.7; margin-bottom: 20px; }
+        .footer-heading { font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-heading); margin-bottom: 25px; position: relative; }
+        .footer-heading::after { content: ''; position: absolute; bottom: -8px; left: 0; width: 30px; height: 2px; background: var(--primary-blue); }
+        
+        .footer-links-list { list-style: none; }
+        .footer-links-list li { margin-bottom: 12px; }
+        .footer-links-list a { text-decoration: none; color: var(--text-muted); font-size: 14px; transition: var(--transition); display: inline-block; }
+        .footer-links-list a:hover { color: var(--primary-blue); transform: translateX(5px); }
+
+        .footer-contact-box { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 20px; }
+        
+        /* 3D Glassmorphism Fluent Asset Container */
+        .footer-3d-icon-wrap {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            overflow: hidden;
+            flex-shrink: 0;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .footer-3d-icon-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .footer-contact-info p:first-child { font-size: 10px; font-weight: 800; color: #999; text-transform: uppercase; margin-bottom: 4px; }
+        .footer-contact-info p:last-child, .footer-contact-info a { font-size: 14px; color: var(--text-heading); font-weight: 600; text-decoration: none; word-break: break-all; }
+
+        .office-card { background: #f9fbff; border: 1px solid #f0f3f7; padding: 20px; border-radius: 16px; margin-bottom: 15px; transition: var(--transition); }
+        .office-card:hover { border-color: var(--primary-blue); background: #fff; box-shadow: var(--card-shadow); }
+
+        .footer-bottom { 
+            max-width: 1320px; margin: 40px auto 0; padding: 25px 20px; border-top: 1px solid #f2f2f2; 
+            display: flex; flex-direction: column; gap: 15px; text-align: center; color: #999; font-size: 11px; 
+        }
+        @media (min-width: 768px) { .footer-bottom { flex-direction: row; justify-content: space-between; text-align: left; font-size: 12px; } }
+
+        /* Media constraints strictly downscaling imagery sizes on fluid compact smartphones */
+        @media (max-width: 480px) {
+            .footer-3d-icon-wrap {
+                width: 26px !important;
+                height: 26px !important;
+                border-radius: 6px !important;
+            }
+        }
+
+        /* --- FLOATING CTA --- */
+        .floating-cta {
+            position: fixed; bottom: 30px; right: 30px; z-index: 2500;
+            background-color: #007AFF; color: white;
+            padding: 8px 24px 8px 8px; border-radius: 50px;
+            display: flex; align-items: center; gap: 14px;
+            box-shadow: 0 10px 30px rgba(0, 122, 255, 0.3);
+            cursor: pointer; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: none;
+        }
+        .floating-cta:hover { transform: scale(1.05) translateY(-5px); background-color: #0056b3; }
+        .floating-cta span { font-weight: 700; font-size: 14px; white-space: nowrap; }
+        .floating-cta-img { width: 45px; height: 45px; border-radius: 50%; border: 2px solid white; object-fit: cover; background: #fff; flex-shrink: 0; }
+
+        /* --- MODALS --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 3000; padding: 20px; }
+        .modal-content { background: white; padding: 35px; border-radius: 24px; width: 100%; max-width: 480px; position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 50px rgba(0,0,0,0.3); }
+        
+        .close-modal { 
+            position: absolute; top: 20px; right: 20px; background: #f5f5f5; border: none; 
+            width: 32px; height: 32px; border-radius: 50%; cursor: pointer; color: #666; 
+            display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 400;
+            transition: var(--transition);
+        }
+        .close-modal:hover { background: #eef2f6; color: #111; }
+        
+        .contact-card-item { display: flex; align-items: center; gap: 15px; padding: 15px; background: #f8f9fa; border-radius: 12px; margin-bottom: 12px; text-decoration: none; color: inherit; transition: 0.2s; border: 1px solid transparent; }
+        .contact-card-item:hover { border-color: #007AFF; background: #f0f7ff; }
+        
+        .modal-3d-wrap {
+            width: 44px;
+            height: 44px;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .modal-3d-wrap img { width: 100%; height: 100%; object-fit: contain; padding: 2px; }
+        
+        /* Lightbox popup metrics */
+        .image-lightbox-overlay { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); 
+            display: none; justify-content: center; align-items: center; 
+            z-index: 4000; padding: 20px; cursor: zoom-out;
+        }
+        .image-lightbox-content { position: relative; max-width: 90%; max-height: 90%; text-align: center; }
+        .image-lightbox-content img { 
+            width: auto; height: auto; max-width: 100%; max-height: 80vh; 
+            border-radius: 12px; box-shadow: 0 0 50px rgba(0,0,0,0.5); 
+        }
+        .close-lightbox { position: absolute; top: -50px; right: 0; background: none; border: none; color: white; font-size: 40px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <button class="floating-cta" onclick="openContactModal()">
+        <img src="https://i.imgur.com/Yu0f1K8.png" alt="Support" class="floating-cta-img">
+        <span>Message Us</span>
+    </button>
+
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html"><img src="https://i.imgur.com/iF45eb9.png" alt="Logo"></a>
+            </div>
+            <nav class="nav-links">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="SERVICE1.html" class="active">Services</a></li>
+                    <li><a href="ABOUT1.html">About Us</a></li>
+                    <li><a href="CONTACT1.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="menu-toggle" onclick="toggleMobileMenu()"><i data-lucide="menu"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <div class="overlay-bg" id="overlayBg"></div>
+    
+    <div class="mobile-nav" id="mobileNav">
+        <button class="close-mobile" onclick="toggleMobileMenu()">×</button>
+        <ul>
+            <li><a href="index.html" onclick="toggleMobileMenu()">Home</a></li>
+            <li><a href="SERVICE1.html" class="active" onclick="toggleMobileMenu()">Services</a></li>
+            <li><a href="ABOUT1.html" onclick="toggleMobileMenu()">About Us</a></li>
+            <li><a href="CONTACT1.html" onclick="toggleMobileMenu()">Contact</a></li>
+        </ul>
+    </div>
+
+    <section class="hero-banner"></section>
+
+    <main class="services-wrapper">
+        <header class="section-header">
+            <span class="section-eyebrow">Professional Engineering</span>
+            <h2>Detailed Service Packages</h2>
+        </header>
+
+        <div class="service-list" id="servicesContainer">
+            </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <img src="https://i.imgur.com/iF45eb9.png" alt="Gomez PECE Logo">
+                </div>
+                <p class="footer-about-text">
+                    Professional electronics engineering consultancy providing licensed technical evaluation and auxiliary system design across the Philippines.
+                </p>
+                <div class="footer-contact-box">
+                    <div class="footer-3d-icon-wrap">
+                        <img src="https://i.imgur.com/9V71PyL.png" alt="Facebook">
+                    </div>
+                    <div class="footer-contact-info">
+                        <p>Facebook Support</p>
+                        <a href="https://facebook.com/gomezpeceservices" target="_blank">Gomez PECE Services</a>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="footer-heading">Navigation</h4>
+                <ul class="footer-links-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="SERVICE1.html">Our Services</a></li>
+                    <li><a href="ABOUT1.html">About Company</a></li>
+                    <li><a href="CONTACT1.html">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="footer-heading">Office Locations</h4>
+                <div class="office-card">
+                    <div class="footer-contact-info">
+                        <p>Main Branch</p>
+                        <p>3613 Marciana Building Makati City</p>
+                    </div>
+                </div>
+                <div class="office-card">
+                    <div class="footer-contact-info">
+                        <p>Satellite Branch</p>
+                        <p>San Felipe, Batangas</p>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="footer-heading">Email Enquiries</h4>
+                <div class="footer-contact-box">
+                    <div class="footer-3d-icon-wrap">
+                        <img src="https://img.icons8.com/3d-fluency/94/mail.png" alt="Email">
+                    </div>
+                    <div class="footer-contact-info">
+                        <p>Email Address</p>
+                        <a href="mailto:gomezpeceservices@gmail.com">gomezpeceservices@gmail.com</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 Gomez PECE Services. All rights reserved.</p>
+            <p>Regulated by the PRC | PECE Licensed</p>
+        </div>
+    </footer>
+
+    <div class="modal-overlay" id="contactInfoModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">×</button>
+            <div style="margin-bottom: 25px;">
+                <h3 style="font-size: 22px; font-weight: 800; color: #111;">Message Us</h3>
+            </div>
+            <a href="https://facebook.com/gomezpeceservices" target="_blank" class="contact-card-item">
+                <div class="modal-3d-wrap">
+                    <img src="https://i.imgur.com/9V71PyL.png" alt="Facebook">
+                </div>
+                <div><p>Facebook Page</p><p>Gomez PECE Services</p></div>
+            </a>
+            <a href="tel:+639171803943" class="contact-card-item">
+                <div class="modal-3d-wrap">
+                    <img src="https://img.icons8.com/3d-fluency/94/phone-office.png" alt="Call">
+                </div>
+                <div><p>Contact Number</p><p>+63 917 180 3943</p></div>
+            </a>
+            <a href="mailto:gomezpeceservices@gmail.com" class="contact-card-item">
+                <div class="modal-3d-wrap">
+                    <img src="https://img.icons8.com/3d-fluency/94/mail.png" alt="Email">
+                </div>
+                <div><p>Email Address</p><p>gomezpeceservices@gmail.com</p></div>
+            </a>
+        </div>
+    </div>
+
+    <div class="image-lightbox-overlay" id="imageLightbox" onclick="closeLightbox()">
+        <div class="image-lightbox-content">
+            <button class="close-lightbox">×</button>
+            <img id="lightboxImg" src="" alt="Enlarged View">
+        </div>
+    </div>
+
+    <script>
+        const servicesData = [
+            {
+                title: "PECE Evaluation Sign and Seal Service",
+                icon: "file-signature",
+                images: ["https://i.imgur.com/3hq8tAZ.png", "https://i.imgur.com/284Vx09.png", "https://i.imgur.com/X05rSaP.png"],
+                desc: "Official professional endorsement for LGU/OBO, PEZA, and BFP requirements. Complete technical documentation including ELECTRONICS PERMIT, ELECTRONIC PLANS, BILL MATERIAL, DATA SHEET, and TECH SPECIFICATION.",
+                tags: ["LGU/OBO", "PEZA/BFP", "Permits", "Occupancy/PTO"]
+            },
+            {
+                title: "Electronics Auxiliary Design",
+                icon: "layout",
+                images: ["https://i.imgur.com/fJRD28b.png", "https://i.imgur.com/FpLxPL7.png", "https://i.imgur.com/MqZDvxA.png"],
+                desc: "Technical design solutions for CCTV surveillance, Fire Detection (FDAS), Paging, and Structured Cabling.",
+                tags: ["FDAS", "CCTV", "Cabling", "PABX/Data Telephone", "AV System", "Broadcast & Telecom", "OSP", "Solar PV System", "NTC Requirements", "PCAB"]
+            },
+            {
+                title: "PEZA Technical Support",
+                icon: "building",
+                images: ["https://i.imgur.com/0O6Xp40.png", "https://i.imgur.com/0RvPLD5.png", "https://i.imgur.com/mbFVOwP.png"],
+                desc: "Engineering consultancy for PEZA zones. Technical audits, inventory filings, and documentation.",
+                tags: ["Zone Compliance", "IT Enterprise"]
+            },
+            {
+                title: "Building Permit Assistance",
+                icon: "clipboard-list",
+                images: ["https://i.imgur.com/wmM6JzS.png", "https://i.imgur.com/wZQfA2c.png", "https://i.imgur.com/ckz8rnb.png"],
+                desc: "Securing electronic permits from LGUs. Representative support for accurate and efficient processing.",
+                tags: ["LGU Liaison", "Permits"]
+            },
+            {
+                title: "Site Ocular Inspection",
+                icon: "eye",
+                images: ["https://i.imgur.com/OZAZO0B.png", "https://i.imgur.com/KYXr0nO.png", "https://i.imgur.com/nulYIjT.png"],
+                desc: "Assessment of infrastructures to identify risks, degradation, and optimization roadmaps.",
+                tags: ["Risk Assessment", "Audit"]
+            },
+            {
+                title: "System Reliability Testing",
+                icon: "zap",
+                images: ["https://i.imgur.com/Gn86WYE.png", "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=400&q=80", "https://i.imgur.com/PiJ5JgU.png"],
+                desc: "Performance stress testing to verify backup power and network throughput stability.",
+                tags: ["Stress Testing", "Uptime"]
+            }
+        ];
+
+        const container = document.getElementById('servicesContainer');
+        servicesData.forEach((s, index) => {
+            container.innerHTML += `
+                <div class="service-row">
+                    <div class="service-name-col">
+                        <div class="row-icon"><i data-lucide="${s.icon}" stroke-width="2.5"></i></div>
+                        <h3 class="row-title">${s.title}</h3>
+                    </div>
+                    <div class="service-desc-col">
+                        <div class="desc-text-box">
+                            <p class="row-description">${s.desc}</p>
+                            <div class="feature-tags">
+                                ${s.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                            </div>
+                            <button class="view-details-btn" onclick="openContactModal()">Inquire Now</button>
+                        </div>
+                        <div class="service-thumb-minimal">
+                            <img src="${s.images[0]}" alt="${s.title}" id="img-${index}" onclick="openLightbox(this.src)">
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+
+        lucide.createIcons();
+
+        // Safe Engine Toggle Scripts
+        const mobileNav = document.getElementById('mobileNav');
+        const overlayBg = document.getElementById('overlayBg');
+        
+        function toggleMobileMenu() { 
+            const isActive = mobileNav.classList.toggle('active'); 
+            overlayBg.classList.toggle('active');
+            document.body.style.overflow = isActive ? 'hidden' : 'auto';
+        }
+        overlayBg.onclick = toggleMobileMenu;
+
+        function openContactModal() { document.getElementById('contactInfoModal').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+        function closeModal() { document.getElementById('contactInfoModal').style.display = 'none'; document.body.style.overflow = 'auto'; }
+        function openLightbox(src) { const img = document.getElementById('lightboxImg'); img.src = src; document.getElementById('imageLightbox').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+        function closeLightbox() { document.getElementById('imageLightbox').style.display = 'none'; document.body.style.overflow = 'auto'; }
+
+        const imageRotation = () => {
+            servicesData.forEach((s, index) => {
+                const imgElement = document.getElementById(`img-${index}`);
+                let currentIdx = parseInt(imgElement.dataset.currentIndex || 0);
+                const nextIdx = (currentIdx + 1) % s.images.length;
+                imgElement.style.opacity = '0';
+                setTimeout(() => {
+                    imgElement.src = s.images[nextIdx];
+                    imgElement.dataset.currentIndex = nextIdx;
+                    imgElement.style.opacity = '1';
+                }, 600);
+            });
+        };
+        setInterval(imageRotation, 3000);
+    </script>
+</body>
+</html>
