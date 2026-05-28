@@ -33,53 +33,42 @@
         /* --- HEADER --- */
         .main-header {
             background-color: #ffffff;
-            min-height: 80px; 
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.04);
+            min-height: 70px; 
+            box-shadow: var(--header-shadow);
             position: sticky; top: 0; z-index: 1000;
             display: flex; align-items: center;
-            padding: 10px 0;
+            padding: 5px 0;
         }
+
+        @media (min-width: 768px) { .main-header { min-height: 80px; } }
 
         .header-container {
             max-width: 1400px; margin: 0 auto; width: 100%;
             display: flex; align-items: center; justify-content: space-between; padding: 0 20px;
         }
 
-        .logo img { height: 60px; width: auto; display: block; object-fit: contain; }
+        .logo img { height: 50px; width: auto; display: block; object-fit: contain; }
         @media (min-width: 768px) { .logo img { height: 85px; } }
 
-        /* Navigation Links - Desktop Only */
         .nav-links { display: none; }
         @media (min-width: 1024px) {
             .nav-links { display: block; }
-            .nav-links ul { list-style: none; display: flex; gap: 40px; }
+            .nav-links ul { list-style: none; display: flex; gap: 30px; }
             .nav-links a { 
-                text-decoration: none; 
-                color: #222; 
-                font-weight: 600; 
-                font-size: 15px; 
-                transition: color 0.3s; 
-                position: relative;
-                padding: 6px 0;
+                text-decoration: none; color: #222; font-weight: 600; font-size: 15px; 
+                transition: color 0.3s; position: relative; padding: 5px 0; 
             }
-            .nav-links a:hover { color: #007AFF; }
+            .nav-links a:hover { color: var(--primary-blue); }
             
-            /* Desktop active menu indicator layout targeting About Us */
-            .nav-links a.active { color: #007AFF; }
+            .nav-links a.active { color: var(--primary-blue); }
             .nav-links a.active::after {
-                content: '';
-                position: absolute;
-                bottom: -2px;
-                left: 0;
-                width: 100%;
-                height: 3px;
-                background: #007AFF;
-                border-radius: 10px;
+                content: ''; position: absolute; bottom: -2px; left: 0; width: 100%;
+                height: 4px; background: var(--primary-blue); border-radius: 10px;
             }
         }
 
         .header-actions { display: flex; align-items: center; gap: 15px; }
-        .menu-toggle { display: block; background: none; border: none; cursor: pointer; color: #333; padding: 5px; }
+        .menu-toggle { display: block; background: none; border: none; cursor: pointer; color: #333; padding: 10px; }
         @media (min-width: 1024px) { .menu-toggle { display: none; } }
 
         /* --- SMOOTH HARDWARE-ACCELERATED MOBILE NAV --- */
@@ -136,7 +125,15 @@
             opacity: 1;
             visibility: visible;
         }
-        .close-mobile { position: absolute; top: 25px; right: 25px; background: none; border: none; font-size: 28px; cursor: pointer; color: #999; }
+
+        /* Fixed and Formatted Circular Mobile Close Target */
+        .close-mobile { 
+            position: absolute; top: 25px; right: 25px; background: #f5f5f5; border: none; 
+            width: 36px; height: 36px; border-radius: 50%; cursor: pointer; color: #666; 
+            display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 400;
+            transition: var(--transition);
+        }
+        .close-mobile:hover { background: #eef2f6; color: #111; transform: scale(1.05); }
 
         /* --- AESTHETIC TEXT HERO --- */
         .about-hero {
@@ -314,7 +311,7 @@
         @media (min-width: 768px) { .footer-logo img { height: 80px; } }
 
         .footer-about-text { color: var(--text-muted); font-size: 14px; line-height: 1.7; margin-bottom: 20px; }
-        .footer-heading { font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-heading); margin-bottom: 25px; position: relative; }
+        .footer-heading { font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-heading); margin-bottom: 30px; position: relative; }
         .footer-heading::after { content: ''; position: absolute; bottom: -8px; left: 0; width: 30px; height: 2px; background: var(--primary-blue); }
         
         .footer-links-list { list-style: none; }
@@ -324,6 +321,7 @@
 
         .footer-contact-box { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 20px; }
         
+        /* 3D Glassmorphism Fluent Asset Container */
         .footer-3d-icon-wrap {
             width: 32px;
             height: 32px;
@@ -358,26 +356,22 @@
             }
         }
 
-        /* --- FLOATING CTA --- */
+        /* --- FLOATING CTA WITH RETINA BOUNCE ANIMATION --- */
         .floating-cta {
             position: fixed; bottom: 20px; right: 20px; z-index: 2500;
             background-color: #007AFF; color: white; padding: 8px 18px 8px 8px; border-radius: 50px;
             display: flex; align-items: center; gap: 10px; box-shadow: 0 10px 30px rgba(0, 122, 255, 0.3);
-            cursor: pointer; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: none;
+            cursor: pointer; border: none;
+            transition: background-color 0.3s, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
+        .floating-cta:hover { background-color: #0056b3; transform: scale(1.05) translateY(-4px); }
+        .floating-cta:active { transform: scale(0.92) translateY(1px); }
+        
         @media (min-width: 768px) { .floating-cta { bottom: 30px; right: 30px; padding: 8px 24px 8px 8px; gap: 14px; } }
         
         .floating-3d-photo {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            overflow: hidden;
-            flex-shrink: 0;
-            background: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            width: 38px; height: 38px; border-radius: 50%; overflow: hidden; flex-shrink: 0;
+            background: #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         @media (min-width: 768px) { .floating-3d-photo { width: 45px; height: 45px; } }
         .floating-3d-photo img { width: 85%; height: 85%; object-fit: contain; }
@@ -386,22 +380,22 @@
         /* --- MODALS --- */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 3000; padding: 15px; }
         .modal-content { background: white; padding: 30px 20px; border-radius: 24px; width: 100%; max-width: 450px; position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 50px rgba(0,0,0,0.3); }
-        .close-modal { position: absolute; top: 15px; right: 15px; background: #f5f5f5; border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; color: #666; font-size: 20px; display: flex; align-items: center; justify-content: center; }
         
+        /* Fixed and Formatted Circular Modal Close Target */
+        .close-modal { 
+            position: absolute; top: 15px; right: 15px; background: #f5f5f5; border: none; 
+            width: 36px; height: 36px; border-radius: 50%; cursor: pointer; color: #666; 
+            display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 400;
+            transition: var(--transition);
+        }
+        .close-modal:hover { background: #eef2f6; color: #111; transform: scale(1.05); }
+
         .contact-card-item { display: flex; align-items: center; gap: 15px; padding: 15px; background: #f8f9fa; border-radius: 12px; margin-bottom: 12px; text-decoration: none; color: inherit; transition: 0.2s; border: 1px solid transparent; }
         .contact-card-item:hover { border-color: var(--primary-blue); background: #f0f7ff; }
         
         .modal-3d-wrap {
-            width: 44px;
-            height: 44px;
-            background: #fff;
-            border-radius: 10px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            width: 44px; height: 44px; background: #fff; border-radius: 10px; overflow: hidden;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
         .modal-3d-wrap img { width: 100%; height: 100%; object-fit: contain; padding: 2px; }
     </style>
@@ -410,7 +404,7 @@
 
     <button class="floating-cta" onclick="openContactModal()">
         <div class="floating-3d-photo">
-            <img src="https://img.icons8.com/3d-fluency/94/chat--v2.png" alt="Support">
+            <img src="https://i.imgur.com/Yu0f1K8.png" alt="Support">
         </div>
         <span>Message Us</span>
     </button>
@@ -418,13 +412,13 @@
     <header class="main-header">
         <div class="header-container">
             <div class="logo">
-                <a href="index.html"><img src="https://i.imgur.com/iF45eb9.png" alt="Company Logo"></a>
+                <a href="HOME1.html"><img src="https://i.imgur.com/iF45eb9.png" alt="Company Logo"></a>
             </div>
             <nav class="nav-links">
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="services.html">Services</a></li>
-                    <li><a href="about.html" class="active">About Us</a></li>
+                    <li><a href="HOME1.html">Home</a></li>
+                    <li><a href="SERVICE1.html">Services</a></li>
+                    <li><a href="ABOUT1.html" class="active">About Us</a></li>
                     <li><a href="CONTACT1.html">Contact</a></li>
                 </ul>
             </nav>
@@ -437,11 +431,11 @@
     <div class="overlay-bg" id="overlayBg" onclick="toggleMobileMenu()"></div>
     
     <div class="mobile-nav" id="mobileNav">
-        <button class="close-mobile" onclick="toggleMobileMenu()">×</button>
+        <button class="close-mobile" onclick="toggleMobileMenu()">Ã—</button>
         <ul>
-            <li><a href="index.html" onclick="toggleMobileMenu()">Home</a></li>
-            <li><a href="services.html" onclick="toggleMobileMenu()">Services</a></li>
-            <li><a href="about.html" class="active" onclick="toggleMobileMenu()">About Us</a></li>
+            <li><a href="HOME1.html" onclick="toggleMobileMenu()">Home</a></li>
+            <li><a href="SERVICE1.html" onclick="toggleMobileMenu()">Services</a></li>
+            <li><a href="ABOUT1.html" class="active" onclick="toggleMobileMenu()">About Us</a></li>
             <li><a href="CONTACT1.html" onclick="toggleMobileMenu()">Contact</a></li>
         </ul>
     </div>
@@ -490,7 +484,7 @@
                 </p>
                 <div class="footer-contact-box">
                     <div class="footer-3d-icon-wrap">
-                        <img src="https://img.icons8.com/3d-fluency/94/facebook-new.png" alt="Facebook">
+                        <img src="https://i.imgur.com/9V71PyL.png" alt="Facebook">
                     </div>
                     <div class="footer-contact-info">
                         <p>Facebook Support</p>
@@ -502,7 +496,7 @@
             <div>
                 <h4 class="footer-heading">Navigation</h4>
                 <ul class="footer-links-list">
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="HOME1.html">Home</a></li>
                     <li><a href="SERVICE1.html">Our Services</a></li>
                     <li><a href="ABOUT1.html">About Company</a></li>
                     <li><a href="CONTACT1.html">Contact Us</a></li>
@@ -547,13 +541,13 @@
 
     <div class="modal-overlay" id="contactInfoModal">
         <div class="modal-content">
-            <button class="close-modal" onclick="closeModal()">×</button>
+            <button class="close-modal" onclick="closeModal()">Ã—</button>
             <div style="margin-bottom: 25px;">
                 <h3 style="font-size: 22px; font-weight: 800; color: #111;">Message Us</h3>
             </div>
             <a href="https://facebook.com/gomezpeceservices" target="_blank" class="contact-card-item">
                 <div class="modal-3d-wrap">
-                    <img src="https://img.icons8.com/3d-fluency/94/facebook-new.png" alt="Facebook">
+                    <img src="https://i.imgur.com/9V71PyL.png" alt="Facebook">
                 </div>
                 <div><p>Facebook Page</p><p>Gomez PECE Services</p></div>
             </a>
