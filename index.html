@@ -92,14 +92,15 @@
         .menu-toggle { display: block; background: none; border: none; cursor: pointer; color: #333; padding: 5px; }
         @media (min-width: 1024px) { .menu-toggle { display: none; } }
 
-        /* --- MOBILE OVERLAY --- */
+        /* --- MOBILE NAV SLIDE DRAWER --- */
         .mobile-nav {
-            position: fixed; top: 0; right: -100%; width: 280px; height: 100vh;
+            position: fixed; top: 0; right: 0; width: 280px; height: 100vh;
             background: white; z-index: 2000; padding: 40px 30px;
             box-shadow: -10px 0 30px rgba(0,0,0,0.05);
-            transition: right 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
-        .mobile-nav.active { right: 0; }
+        .mobile-nav.active { transform: translateX(0); }
         .mobile-nav ul { list-style: none; margin-top: 40px; }
         .mobile-nav li { margin-bottom: 20px; }
         .mobile-nav a { 
@@ -112,7 +113,6 @@
             padding-bottom: 4px;
         }
         
-        /* Mobile active menu underscore token layout */
         .mobile-nav a.active { color: #007AFF; }
         .mobile-nav a.active::after {
             content: '';
@@ -125,13 +125,22 @@
             border-radius: 10px;
         }
         
+        /* Premium Fixed Circular Close Buttons */
+        .close-mobile { 
+            position: absolute; top: 25px; right: 25px; background: #f5f5f5; border: none; 
+            width: 36px; height: 36px; border-radius: 50%; cursor: pointer; color: #666; 
+            display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 400;
+            transition: var(--transition);
+        }
+        .close-mobile:hover { background: #eef2f6; color: #111; transform: scale(1.05); }
+        
         .overlay-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.4); backdrop-filter: blur(2px);
-            z-index: 1500; display: none;
+            z-index: 1500; opacity: 0; visibility: hidden;
+            transition: opacity 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), visibility 0.4s;
         }
-        .overlay-bg.active { display: block; }
-        .close-modal { position: absolute; top: 25px; right: 25px; background: none; border: none; font-size: 28px; cursor: pointer; color: #999; }
+        .overlay-bg.active { opacity: 1; visibility: visible; }
 
         /* --- CAROUSEL --- */
         .carousel-wrapper { max-width: 1320px; margin: 20px auto; padding: 0 15px; }
@@ -314,7 +323,7 @@
 
         .footer-bottom { 
             max-width: 1320px; margin: 40px auto 0; padding: 25px 20px; border-top: 1px solid #f2f2f2; 
-            display: flex; flex-direction: column; gap: 15px; text-align: center; color: #999; font-size: 11px; 
+            display: flex; justify-content: space-between; align-items: center; color: #999; font-size: 11px; 
         }
         @media (min-width: 768px) { .footer-bottom { flex-direction: row; justify-content: space-between; text-align: left; font-size: 12px; } }
 
@@ -331,21 +340,18 @@
             position: fixed; bottom: 20px; right: 20px; z-index: 2500;
             background-color: #007AFF; color: white; padding: 8px 18px 8px 8px; border-radius: 50px;
             display: flex; align-items: center; gap: 10px; box-shadow: 0 10px 30px rgba(0, 122, 255, 0.3);
-            cursor: pointer; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: none;
+            cursor: pointer; border: none;
+            /* Updated elastic kinetic curve token mapping */
+            transition: background-color 0.3s, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
+        .floating-cta:hover { background-color: #0056b3; transform: scale(1.05) translateY(-4px); }
+        .floating-cta:active { transform: scale(0.92) translateY(1px); }
+        
         @media (min-width: 768px) { .floating-cta { bottom: 30px; right: 30px; padding: 8px 24px 8px 8px; gap: 14px; } }
         
         .floating-3d-photo {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            overflow: hidden;
-            flex-shrink: 0;
-            background: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            width: 38px; height: 38px; border-radius: 50%; overflow: hidden; flex-shrink: 0;
+            background: #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         @media (min-width: 768px) { .floating-3d-photo { width: 45px; height: 45px; } }
         .floating-3d-photo img { width: 85%; height: 85%; object-fit: contain; }
@@ -354,22 +360,22 @@
         /* --- MODALS --- */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 3000; padding: 15px; }
         .modal-content { background: white; padding: 30px 20px; border-radius: 24px; width: 100%; max-width: 450px; position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 50px rgba(0,0,0,0.3); }
-        .close-modal { position: absolute; top: 15px; right: 15px; background: #f5f5f5; border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; color: #666; font-size: 20px; display: flex; align-items: center; justify-content: center; }
         
+        /* Updated Premium Circular Close Targets for Modals */
+        .close-modal { 
+            position: absolute; top: 15px; right: 15px; background: #f5f5f5; border: none; 
+            width: 36px; height: 36px; border-radius: 50%; cursor: pointer; color: #666; 
+            display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 400;
+            transition: var(--transition);
+        }
+        .close-modal:hover { background: #eef2f6; color: #111; transform: scale(1.05); }
+
         .contact-card-item { display: flex; align-items: center; gap: 15px; padding: 15px; background: #f8f9fa; border-radius: 12px; margin-bottom: 12px; text-decoration: none; color: inherit; transition: 0.2s; border: 1px solid transparent; }
         .contact-card-item:hover { border-color: var(--primary-blue); background: #f0f7ff; }
         
         .modal-3d-wrap {
-            width: 44px;
-            height: 44px;
-            background: #fff;
-            border-radius: 10px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            width: 44px; height: 44px; background: #fff; border-radius: 10px; overflow: hidden;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
         .modal-3d-wrap img { width: 100%; height: 100%; object-fit: contain; padding: 2px; }
     </style>
@@ -378,14 +384,15 @@
 
     <button class="floating-cta" onclick="openQuickContact()">
         <div class="floating-3d-photo">
-            <img src="https://img.icons8.com/3d-fluency/94/chat--v2.png" alt="Support">
+            <img src="https://i.imgur.com/Yu0f1K8.png" alt="Support">
         </div>
         <span>Message Us</span>
     </button>
 
     <div class="overlay-bg" id="overlayBg"></div>
+    
     <div class="mobile-nav" id="mobileNav">
-        <button class="close-modal" style="top:25px; right:25px" onclick="toggleMobileMenu()">×</button>
+        <button class="close-mobile" onclick="toggleMobileMenu()">Ã—</button>
         <ul>
             <li><a href="index.html" class="active" onclick="toggleMobileMenu()">Home</a></li>
             <li><a href="SERVICE1.html" onclick="toggleMobileMenu()">Services</a></li>
@@ -548,7 +555,7 @@
                 </p>
                 <div class="footer-contact-box">
                     <div class="footer-3d-icon-wrap">
-                        <img src="https://img.icons8.com/3d-fluency/94/facebook-new.png" alt="Facebook">
+                        <img src="https://i.imgur.com/9V71PyL.png" alt="Facebook">
                     </div>
                     <div class="footer-contact-info">
                         <p>Facebook Support</p>
@@ -598,14 +605,14 @@
         </div>
 
         <div class="footer-bottom">
-            <p>© 2026 Gomez PECE Services. All rights reserved.</p>
+            <p>Â© 2026 Gomez PECE Services. All rights reserved.</p>
             <p>Regulated by the PRC | PECE Licensed</p>
         </div>
     </footer>
 
     <div class="modal-overlay" id="quickContactModal">
         <div class="modal-content">
-            <button class="close-modal" onclick="closeModal('quickContactModal')">×</button>
+            <button class="close-modal" onclick="closeModal('quickContactModal')">Ã—</button>
             <div class="modal-header-text">
                 <h3>Message Us</h3>
                 <p>Choose your preferred contact channel below.</p>
@@ -613,7 +620,7 @@
             
             <a href="https://facebook.com/gomezpeceservices" target="_blank" class="contact-card-item">
                 <div class="modal-3d-wrap">
-                    <img src="https://img.icons8.com/3d-fluency/94/facebook-new.png" alt="Facebook">
+                    <img src="https://i.imgur.com/9V71PyL.png" alt="Facebook">
                 </div>
                 <div>
                     <p>Facebook Page</p>
