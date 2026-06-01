@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us | Professional Technical Solutions</title>
+    <title>Contact</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -45,7 +46,7 @@
             background-color: #ffffff;
             min-height: 80px; 
             box-shadow: 0 2px 15px rgba(0, 0, 0, 0.04);
-            position: sticky; top: 0; z-mex: 1000;
+            position: sticky; top: 0; z-index: 1000;
             display: flex; align-items: center;
             padding: 10px 0;
         }
@@ -338,7 +339,7 @@
         @media (max-width: 480px) {
             .form-action-row { justify-content: flex-end; } 
             .submit-btn { 
-                max-width: 140px !important; 
+                max-width: 1400px !important; 
                 font-size: 11px !important; 
                 padding: 10px 14px !important; 
                 border-radius: 8px !important;
@@ -403,7 +404,7 @@
         .footer-logo img { height: 60px; margin-bottom: 25px; }
         @media (min-width: 768px) { .footer-logo img { height: 80px; } }
 
-        .footer-about-text { color: var(--text-muted); font-size: 14px; line-height: 1.7; margin-bottom: 20px; }
+        .footer-about-text { color: var(--text-muted); font-size: 14px; line-height: 1.8; margin-bottom: 20px; }
         .footer-heading { font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-heading); margin-bottom: 25px; position: relative; }
         .footer-heading::after { content: ''; position: absolute; bottom: -8px; left: 0; width: 30px; height: 2px; background: var(--primary-blue); }
         
@@ -437,7 +438,7 @@
 
         .footer-bottom { 
             max-width: 1320px; margin: 40px auto 0; padding: 25px 20px; border-top: 1px solid #f2f2f2; 
-            display: flex; flex-direction: column; gap: 15px; text-align: center; color: #999; font-size: 11px; 
+            display: flex; justify-content: space-between; align-items: center; color: #999; font-size: 12px; 
         }
         @media (min-width: 768px) { .footer-bottom { flex-direction: row; justify-content: space-between; text-align: left; font-size: 12px; } }
 
@@ -499,6 +500,7 @@
 </head>
 <body>
 
+    <!-- Floating Message Button -->
     <button class="floating-cta" onclick="openContactModal()">
         <div class="floating-3d-photo">
             <img src="https://i.imgur.com/Yu0f1K8.png" alt="Support">
@@ -506,6 +508,7 @@
         <span>Message Us</span>
     </button>
 
+    <!-- Header -->
     <header class="main-header">
         <div class="header-container">
             <div class="logo">
@@ -527,16 +530,18 @@
 
     <div class="overlay-bg" id="overlayBg" onclick="toggleMobileMenu()"></div>
     
+    <!-- Mobile Nav Overlay -->
     <div class="mobile-nav" id="mobileNav">
         <button class="close-mobile" onclick="toggleMobileMenu()">×</button>
         <ul>
-            <li><a href="index.html"hime onclick="toggleMobileMenu()">Home</a></li>
+            <li><a href="index.html" onclick="toggleMobileMenu()">Home</a></li>
             <li><a href="SERVICE1.html" onclick="toggleMobileMenu()">Services</a></li>
             <li><a href="ABOUT1.html" onclick="toggleMobileMenu()">About Us</a></li>
             <li><a href="CONTACT1.html" class="active" onclick="toggleMobileMenu()">Contact</a></li>
         </ul>
     </div>
 
+    <!-- Contact Hero -->
     <section class="contact-hero">
         <span class="section-eyebrow">Get In Touch</span>
         <h1>Partner with Licensed PECE Experts</h1>
@@ -664,8 +669,10 @@
         </div>
     </main>
 
+    <!-- Premium Footer -->
     <footer class="main-footer">
         <div class="footer-container">
+            <!-- Brand Section -->
             <div class="footer-brand">
                 <div class="footer-logo">
                     <img src="https://i.imgur.com/iF45eb9.png" alt="Gomez PECE Logo">
@@ -684,16 +691,18 @@
                 </div>
             </div>
 
+            <!-- Quick Links -->
             <div>
                 <h4 class="footer-heading">Navigation</h4>
                 <ul class="footer-links-list">
-                    <li><a href="HOME1.html">Home</a></li>
+                    <li><a href="index.html">Home</a></li>
                     <li><a href="SERVICE1.html">Our Services</a></li>
                     <li><a href="ABOUT1.html">About Company</a></li>
                     <li><a href="CONTACT1.html">Contact Us</a></li>
                 </ul>
             </div>
 
+            <!-- Locations Section -->
             <div>
                 <h4 class="footer-heading">Office Locations</h4>
                 <div class="office-card">
@@ -709,7 +718,8 @@
                     </div>
                 </div>
             </div>
-            
+
+            <!-- Email Enquiries -->
             <div>
                 <h4 class="footer-heading">Email Enquiries</h4>
                 <div class="footer-contact-box">
@@ -725,15 +735,18 @@
         </div>
 
         <div class="footer-bottom">
-            <p>© 2026 Gomez PECE Services. All rights reserved.</p>
+            <p>&copy; 2026 Gomez PECE Services. All rights reserved.</p>
             <p>Regulated by the PRC | PECE Licensed</p>
         </div>
     </footer>
 
+    <!-- Modals -->
     <div class="modal-overlay" id="contactInfoModal">
         <div class="modal-content">
             <button class="close-modal" onclick="closeModal()">×</button>
-            <div style="margin-bottom: 25px;"><h3 style="font-size: 22px; font-weight: 800; color: #111;">Message Us</h3></div>
+            <div style="margin-bottom: 25px;">
+                <h3 style="font-size: 22px; font-weight: 800; color: #111;">Message Us</h3>
+            </div>
             <a href="https://facebook.com/gomezpeceservices" target="_blank" class="contact-card-item">
                 <div class="modal-3d-wrap">
                     <img src="https://i.imgur.com/9V71PyL.png" alt="Facebook">
