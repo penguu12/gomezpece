@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <style>
@@ -381,7 +382,7 @@
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 3000; padding: 15px; }
         .modal-content { background: white; padding: 30px 20px; border-radius: 24px; width: 100%; max-width: 450px; position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 50px rgba(0,0,0,0.3); }
         
-        /* Fixed and Formatted Circular Modal Close Target */
+        /* Fixed and Formatted Circular Mobile Close Target */
         .close-modal { 
             position: absolute; top: 15px; right: 15px; background: #f5f5f5; border: none; 
             width: 36px; height: 36px; border-radius: 50%; cursor: pointer; color: #666; 
@@ -402,6 +403,7 @@
 </head>
 <body>
 
+    <!-- Floating Message Button -->
     <button class="floating-cta" onclick="openContactModal()">
         <div class="floating-3d-photo">
             <img src="https://i.imgur.com/Yu0f1K8.png" alt="Support">
@@ -409,14 +411,15 @@
         <span>Message Us</span>
     </button>
 
+    <!-- Header -->
     <header class="main-header">
         <div class="header-container">
             <div class="logo">
-                <a href="HOME1.html"><img src="https://i.imgur.com/iF45eb9.png" alt="Company Logo"></a>
+                <a href="index.html"><img src="https://i.imgur.com/iF45eb9.png" alt="Company Logo"></a>
             </div>
             <nav class="nav-links">
                 <ul>
-                    <li><a href="HOME1.html">Home</a></li>
+                    <li><a href="index.html">Home</a></li>
                     <li><a href="SERVICE1.html">Services</a></li>
                     <li><a href="ABOUT1.html" class="active">About Us</a></li>
                     <li><a href="CONTACT1.html">Contact</a></li>
@@ -430,30 +433,35 @@
 
     <div class="overlay-bg" id="overlayBg" onclick="toggleMobileMenu()"></div>
     
+    <!-- Mobile Nav Overlay -->
     <div class="mobile-nav" id="mobileNav">
         <button class="close-mobile" onclick="toggleMobileMenu()">×</button>
         <ul>
-            <li><a href="HOME1.html" onclick="toggleMobileMenu()">Home</a></li>
+            <li><a href="index.html" onclick="toggleMobileMenu()">Home</a></li>
             <li><a href="SERVICE1.html" onclick="toggleMobileMenu()">Services</a></li>
             <li><a href="ABOUT1.html" class="active" onclick="toggleMobileMenu()">About Us</a></li>
             <li><a href="CONTACT1.html" onclick="toggleMobileMenu()">Contact</a></li>
         </ul>
     </div>
 
+    <!-- Text-Only Hero Banner -->
     <section class="about-hero">
         <span class="section-eyebrow">Our Legacy</span>
         <h1>Engineered for Safety, Certified for Excellence</h1>
         <p>Leading the electronics engineering landscape in the Philippines through technical precision and professional integrity.</p>
     </section>
 
+    <!-- About Content -->
     <main class="about-wrapper">
         <div class="info-grid">
+            <!-- Mission -->
             <div class="info-card">
                 <div class="card-icon"><i data-lucide="target"></i></div>
                 <h3 class="card-title">Our Mission</h3>
                 <p class="card-text">To provide high-integrity electronics engineering solutions that empower industries to meet regulatory standards while maintaining maximum operational safety and efficiency across all commercial infrastructures.</p>
             </div>
 
+            <!-- Vision -->
             <div class="info-card">
                 <div class="card-icon"><i data-lucide="eye"></i></div>
                 <h3 class="card-title">Our Vision</h3>
@@ -461,8 +469,10 @@
             </div>
         </div>
 
+        <!-- Expertise block with Half-Body Portrait -->
         <div class="expertise-banner">
             <div class="expertise-image-box">
+                <!-- Professional half-body portrait placeholder -->
                 <img src="https://i.imgur.com/hkDfsiJ.png" alt="Lead PECE Engineer">
             </div>
             <div class="expertise-content">
@@ -473,8 +483,10 @@
         </div>
     </main>
 
+    <!-- Premium Footer -->
     <footer class="main-footer">
         <div class="footer-container">
+            <!-- Brand Section -->
             <div class="footer-brand">
                 <div class="footer-logo">
                     <img src="https://i.imgur.com/iF45eb9.png" alt="Gomez PECE Logo">
@@ -493,16 +505,18 @@
                 </div>
             </div>
 
+            <!-- Quick Links -->
             <div>
                 <h4 class="footer-heading">Navigation</h4>
                 <ul class="footer-links-list">
-                    <li><a href="HOME1.html">Home</a></li>
+                    <li><a href="index.html">Home</a></li>
                     <li><a href="SERVICE1.html">Our Services</a></li>
                     <li><a href="ABOUT1.html">About Company</a></li>
                     <li><a href="CONTACT1.html">Contact Us</a></li>
                 </ul>
             </div>
 
+            <!-- Locations Section -->
             <div>
                 <h4 class="footer-heading">Office Locations</h4>
                 <div class="office-card">
@@ -519,6 +533,7 @@
                 </div>
             </div>
 
+            <!-- Email Enquiries -->
             <div>
                 <h4 class="footer-heading">Email Enquiries</h4>
                 <div class="footer-contact-box">
@@ -539,6 +554,7 @@
         </div>
     </footer>
 
+    <!-- Modals -->
     <div class="modal-overlay" id="contactInfoModal">
         <div class="modal-content">
             <button class="close-modal" onclick="closeModal()">×</button>
