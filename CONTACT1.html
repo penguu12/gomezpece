@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Gomez PECE Services</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="https://i.imgur.com/Yu0f1K8.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init({ publicKey: "5pCsko5h_Tywkoujq" });
+        })();
+    </script>
+
+    <style>
+        /* --- BRAND DESIGN TOKENS --- */
+        :root {
+            --primary-blue: #007AFF;
+            --primary-hover: #0056b3;
+            --facebook-blue: #1877F2;
+            --bg-light: #fcfcfc;
+            --text-main: #333;
+            --text-heading: #1a1a1a;
+            --text-muted: #666;
+            --header-shadow: 0 2px 15px rgba(0, 0, 0, 0.04);
+            --card-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg-light); color: var(--text-main); overflow-x: hidden; scroll-behavior: smooth; }
+        .lucide { width: 100%; height: 100%; }
+
+        /* --- HEADER --- */
+        .main-header {
+            background-color: #ffffff;
+            min-height: 80px;
+            box-shadow: var(--header-shadow);
+            position: sticky; top: 0; z-index: 1000;
+            display: flex; align-items: center;
+            padding: 10px 0;
+        }
+        .header-container {
+            max-width: 1400px; margin: 0 auto; width: 100%;
+            display: flex; align-items: center; justify-content: space-between; padding: 0 20px;
+        }
+        .logo img { height: 60px; width: auto; display: block; object-fit: contain; }
+        @media (min-width: 768px) { .logo img { height: 85px; } }
+
+        .nav-links { display: none; }
+        @media (min-width: 1024px) {
+            .nav-links { display: block; }
+            .nav-links ul { list-style: none; display: flex; gap: 40px; }
+            .nav-links a {
+                text-decoration: none; color: #222; font-weight: 600; font-size: 15px;
+                transition: color 0.3s; position: relative; padding: 6px 0;
+            }
+            .nav-links a:hover { color: var(--primary-blue); }
+            .nav-links a.active { color: var(--primary-blue); }
+            .nav-links a.active::after {
+                content: ''; position: absolute; bottom: -2px; left: 0; width: 100%;
+                height: 3px; background: var(--primary-blue); border-radius: 10px;
+            }
+        }
+        .header-actions { display: flex; align-items: center; gap: 15px; }
+        .menu-toggle { display: block; background: none; border: none; cursor: pointer; color: #333; padding: 5px; }
+        @media (min-width: 1024px) { .menu-toggle { display: none; } }
+
+        /* --- MOBILE NAV --- */
+        .mobile-nav {
+            position: fixed; top: 0; right: -100%; width: 280px; height: 100vh;
+            background: white; z-index: 2000; padding: 40px 30px;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.05);
+            transition: right 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .mobile-nav.active { right: 0; }
+        .mobile-nav ul { list-style: none; margin-top: 40px; }
+        .mobile-nav li { margin-bottom: 20px; }
+        .mobile-nav a {
+            text-decoration: none; color: #1a1a1a; font-size: 18px; font-weight: 700;
+            display: inline-block; position: relative; padding-bottom: 4px;
+        }
+        .mobile-nav a.active { color: var(--primary-blue); }
+        .mobile-nav a.active::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%;
+            height: 3px; background: var(--primary-blue); border-radius: 10px;
+        }
+
+        .overlay-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4); backdrop-filter: blur(2px);
+            z-index: 1500; display: none;
+        }
+        .overlay-bg.active { display: block; }
+
+        .close-modal {
+            position: absolute; top: 15px; right: 15px; background: #f5f5f5; border: none;
+            width: 36px; height: 36px; border-radius: 50%; cursor: pointer; color: #666;
+            display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 400;
+            transition: var(--transition); z-index: 10;
+        }
+        .close-modal:hover { background: #eef2f6; color: #111; transform: scale(1.05); }
+
+        /* --- HERO --- */
+        .contact-hero {
+            padding: 60px 20px; text-align: center;
+            background: linear-gradient(180deg, #f0f7ff 0%, var(--bg-light) 100%);
+            border-bottom: 1px solid rgba(0, 122, 255, 0.05);
+            margin-bottom: 40px;
+        }
+        @media (min-width: 768px) { .contact-hero { padding: 100px 20px; margin-bottom: 60px; } }
+        .contact-hero h1 {
+            font-size: 32px; font-weight: 800; color: var(--text-heading);
+            letter-spacing: -1px; max-width: 900px; margin: 0 auto 20px auto; line-height: 1.2;
+        }
+        @media (min-width: 768px) { .contact-hero h1 { font-size: 52px; letter-spacing: -1.5px; } }
+        .contact-hero p { font-size: 16px; color: var(--text-muted); max-width: 600px; margin: 0 auto; line-height: 1.6; }
+        .section-eyebrow { display: block; text-transform: uppercase; color: var(--primary-blue); font-weight: 700; font-size: 11px; letter-spacing: 2px; margin-bottom: 12px; }
+
+        /* --- CONTACT LAYOUT --- */
+        .contact-wrapper { max-width: 1200px; margin: 0 auto 80px auto; padding: 0 20px; }
+        .contact-grid { display: grid; grid-template-columns: 1fr; gap: 40px; }
+        @media (min-width: 1024px) { .contact-grid { grid-template-columns: 1fr 1.35fr; gap: 50px; } }
+
+        /* --- INFO CARDS --- */
+        .info-card-group { display: flex; flex-direction: column; gap: 20px; }
+        .info-card {
+            background: #ffffff; border-radius: 24px; border: 1px solid rgba(0,0,0,0.05);
+            padding: 25px; box-shadow: var(--card-shadow);
+            display: flex; align-items: center; gap: 20px;
+            transition: var(--transition); text-decoration: none; color: inherit;
+        }
+        .info-card:hover { transform: translateX(10px); border-color: var(--primary-blue); background: #fdfdff; }
+
+        .info-card-icon { width: 56px; height: 56px; position: relative; perspective: 200px; flex-shrink: 0; }
+        .icon-flipper {
+            width: 100%; height: 100%; position: absolute;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .info-card:hover .icon-flipper { transform: rotateY(180deg); }
+        .icon-front, .icon-back {
+            position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+            border-radius: 14px; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+        }
+        .icon-front { background: #ffffff; z-index: 2; }
+        .icon-back { background: var(--primary-blue); transform: rotateY(180deg); }
+        .icon-front img { width: 100%; height: 100%; object-fit: contain; padding: 2px; }
+        .icon-back-fallback { color: #ffffff; width: 22px; height: 22px; }
+
+        .info-card-details p:first-child { font-size: 11px; font-weight: 800; color: #999; text-transform: uppercase; margin-bottom: 4px; }
+        .info-card-details p:last-child { font-size: 16px; font-weight: 700; color: var(--text-heading); }
+
+        /* --- RIGHT COLUMN --- */
+        .form-and-map-column { display: flex; flex-direction: column; gap: 24px; width: 100%; max-width: 620px; }
+
+        /* --- CONTACT FORM --- */
+        .form-container {
+            background: #ffffff; border-radius: 24px; border: 1px solid rgba(0,0,0,0.05);
+            padding: 35px; box-shadow: 0 10px 30px rgba(0,0,0,0.02); width: 100%;
+        }
+        @media (max-width: 768px) { .form-container { padding: 25px; } }
+        .form-header { margin-bottom: 25px; }
+        .form-header h2 { font-size: 24px; font-weight: 800; color: var(--text-heading); margin-bottom: 8px; letter-spacing: -0.5px; }
+        .form-header p { font-size: 14px; color: var(--text-muted); line-height: 1.5; }
+
+        .form-row { display: grid; grid-template-columns: 1fr; gap: 16px; margin-bottom: 16px; }
+        @media (min-width: 640px) { .form-row { grid-template-columns: 1fr 1fr; } }
+        .input-group { display: flex; flex-direction: column; gap: 6px; }
+        .input-group label { font-size: 12px; font-weight: 700; color: var(--text-heading); letter-spacing: 0.3px; text-transform: uppercase; opacity: 0.8; }
+        .input-group input, .input-group textarea {
+            width: 100%; padding: 12px 16px; border-radius: 10px;
+            border: 1px solid rgba(0,0,0,0.09); background: #fafafa;
+            font-size: 14px; transition: var(--transition); outline: none; color: var(--text-heading);
+        }
+        .input-group input:focus, .input-group textarea:focus {
+            border-color: var(--primary-blue); background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(0,122,255,0.08);
+        }
+        .input-group textarea { min-height: 110px; resize: vertical; }
+        .form-action-row { display: flex; width: 100%; justify-content: flex-end; margin-top: 24px; }
+        .submit-btn {
+            width: 100%; max-width: 160px; background: var(--primary-blue); color: white;
+            padding: 11px 20px; border-radius: 10px; border: none; font-size: 13px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer; transition: var(--transition);
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .submit-btn:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,122,255,0.25); }
+        .submit-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; box-shadow: none; }
+        @media (max-width: 480px) { .submit-btn { max-width: 100% !important; } }
+
+        /* --- MAP --- */
+        .map-wrapper {
+            background: #ffffff; border-radius: 24px; border: 1px solid rgba(0,0,0,0.05);
+            padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.02); width: 100%;
+        }
+        @media (max-width: 768px) { .map-wrapper { padding: 20px; } }
+        .map-heading { font-size: 14px; font-weight: 800; color: var(--text-heading); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px; }
+        .map-frame-holder { width: 100%; height: 280px; border-radius: 14px; overflow: hidden; border: 1px solid rgba(0,0,0,0.08); }
+        .map-frame-holder iframe { width: 100%; height: 100%; border: none; display: block; }
+
+        /* --- FOOTER --- */
+        .main-footer {
+            background-color: #ffffff; border-top: 1px solid #eee;
+            padding: 60px 0 30px 0; margin-top: 60px;
+        }
+        @media (min-width: 768px) { .main-footer { padding: 100px 0 40px 0; margin-top: 100px; } }
+
+        .footer-container {
+            max-width: 1320px; margin: 0 auto; padding: 0 20px;
+            display: grid; grid-template-columns: 1fr; gap: 40px;
+        }
+        @media (min-width: 640px) { .footer-container { grid-template-columns: 1fr 1fr; } }
+        @media (min-width: 1024px) { .footer-container { grid-template-columns: 1.5fr 1fr 1.5fr 1.2fr; gap: 40px; } }
+
+        .footer-logo img { height: 60px; margin-bottom: 25px; }
+        @media (min-width: 768px) { .footer-logo img { height: 80px; } }
+
+        .footer-about-text { color: var(--text-muted); font-size: 14px; line-height: 1.8; margin-bottom: 20px; }
+        .footer-heading { font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-heading); margin-bottom: 30px; position: relative; }
+        .footer-heading::after { content: ''; position: absolute; bottom: -8px; left: 0; width: 30px; height: 2px; background: var(--primary-blue); }
+
+        .footer-links-list { list-style: none; }
+        .footer-links-list li { margin-bottom: 12px; }
+        .footer-links-list a { text-decoration: none; color: var(--text-muted); font-size: 14px; transition: var(--transition); display: inline-block; }
+        .footer-links-list a:hover { color: var(--primary-blue); transform: translateX(5px); }
+
+        .footer-contact-box { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 20px; }
+        .footer-3d-icon-wrap {
+            width: 32px; height: 32px; border-radius: 8px; overflow: hidden; flex-shrink: 0;
+            background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .footer-3d-icon-wrap img { width: 100%; height: 100%; object-fit: contain; }
+        .footer-contact-info p:first-child { font-size: 10px; font-weight: 800; color: #999; text-transform: uppercase; margin-bottom: 4px; }
+        .footer-contact-info p:last-child, .footer-contact-info a { font-size: 14px; color: var(--text-heading); font-weight: 600; text-decoration: none; word-break: break-all; }
+
+        .office-card { background: #f9fbff; border: 1px solid #f0f3f7; padding: 20px; border-radius: 16px; margin-bottom: 15px; transition: var(--transition); }
+        .office-card:hover { border-color: var(--primary-blue); background: #fff; box-shadow: var(--card-shadow); }
+
+        .footer-bottom {
+            max-width: 1320px; margin: 40px auto 0; padding: 25px 20px; border-top: 1px solid #f2f2f2;
+            display: flex; justify-content: space-between; align-items: center; color: #999; font-size: 12px;
+        }
+        @media (min-width: 768px) { .footer-bottom { flex-direction: row; } }
+        @media (max-width: 480px) { .footer-3d-icon-wrap { width: 26px !important; height: 26px !important; border-radius: 6px !important; } }
+
+        /* --- FLOATING CTA --- */
+        .floating-cta {
+            position: fixed; bottom: 20px; right: 20px; z-index: 2500;
+            background-color: #007AFF; color: white; padding: 8px 18px 8px 8px; border-radius: 50px;
+            display: flex; align-items: center; gap: 10px; box-shadow: 0 10px 30px rgba(0,122,255,0.3);
+            cursor: pointer; border: none;
+            transition: background-color 0.3s, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .floating-cta:hover { background-color: #0056b3; transform: scale(1.05) translateY(-4px); }
+        .floating-cta:active { transform: scale(0.92) translateY(1px); }
+        @media (min-width: 768px) { .floating-cta { bottom: 30px; right: 30px; padding: 8px 24px 8px 8px; gap: 14px; } }
+        .floating-3d-photo {
+            width: 38px; height: 38px; border-radius: 50%; overflow: hidden; flex-shrink: 0;
+            background: #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        @media (min-width: 768px) { .floating-3d-photo { width: 45px; height: 45px; } }
+        .floating-3d-photo img { width: 85%; height: 85%; object-fit: contain; }
+        .floating-cta span { font-weight: 700; font-size: 14px; white-space: nowrap; }
+
+        /* --- MODALS --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 3000; padding: 15px;
+            opacity: 0; visibility: hidden; pointer-events: none;
+            transition: opacity 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), visibility 0.4s;
+        }
+        .modal-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; }
+        .modal-content {
+            background: white; padding: 30px 20px; border-radius: 24px; width: 100%; max-width: 450px;
+            position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .modal-overlay.active .modal-content { transform: scale(1) translateY(0); }
+
+        .contact-card-item {
+            display: flex; align-items: center; gap: 15px; padding: 15px;
+            background: #f8f9fa; border-radius: 12px; margin-bottom: 12px;
+            text-decoration: none; color: inherit; transition: 0.2s; border: 1px solid transparent;
+        }
+        .contact-card-item:hover { border-color: var(--primary-blue); background: #f0f7ff; }
+        .modal-3d-wrap {
+            width: 44px; height: 44px; background: #fff; border-radius: 10px; overflow: hidden;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .modal-3d-wrap img { width: 100%; height: 100%; object-fit: contain; padding: 2px; }
+    </style>
+</head>
+<body>
+
+    <!-- Floating CTA -->
+    <button class="floating-cta" onclick="openModal('contactInfoModal')">
+        <div class="floating-3d-photo">
+            <img src="https://i.imgur.com/Yu0f1K8.png" alt="Support">
+        </div>
+        <span>Message Us</span>
+    </button>
+
+    <!-- Overlay & Mobile Nav -->
+    <div class="overlay-bg" id="overlayBg"></div>
+    <div class="mobile-nav" id="mobileNav">
+        <button class="close-modal" onclick="toggleMobileMenu()">&times;</button>
+        <ul>
+            <li><a href="index.html" onclick="toggleMobileMenu()">Home</a></li>
+            <li><a href="SERVICE1.html" onclick="toggleMobileMenu()">Services</a></li>
+            <li><a href="ABOUT1.html" onclick="toggleMobileMenu()">About Us</a></li>
+            <li><a href="CONTACT1.html" class="active" onclick="toggleMobileMenu()">Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html"><img src="https://i.imgur.com/iF45eb9.png" alt="Company Logo"></a>
+            </div>
+            <nav class="nav-links">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="SERVICE1.html">Services</a></li>
+                    <li><a href="ABOUT1.html">About Us</a></li>
+                    <li><a href="CONTACT1.html" class="active">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="menu-toggle" onclick="toggleMobileMenu()">
+                    <i data-lucide="menu"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="contact-hero">
+        <span class="section-eyebrow">Get In Touch</span>
+        <h1>Partner with Licensed PECE Experts</h1>
+        <p>Whether you're starting a PEZA project or need a professional sign and seal, we are here to provide technical excellence.</p>
+    </section>
+
+    <!-- Contact Content -->
+    <main class="contact-wrapper">
+        <div class="contact-grid">
+
+            <!-- Info Cards -->
+            <div class="info-card-group">
+                <a href="tel:+639171803943" class="info-card">
+                    <div class="info-card-icon">
+                        <div class="icon-flipper">
+                            <div class="icon-front">
+                                <img src="https://img.icons8.com/3d-fluency/94/phone-office.png" alt="Call">
+                            </div>
+                            <div class="icon-back">
+                                <div class="icon-back-fallback"><i data-lucide="phone"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-card-details">
+                        <p>Call or SMS</p>
+                        <p>+63 917 180 3943</p>
+                    </div>
+                </a>
+
+                <a href="mailto:gomezpeceservices@gmail.com" class="info-card">
+                    <div class="info-card-icon">
+                        <div class="icon-flipper">
+                            <div class="icon-front">
+                                <img src="https://img.icons8.com/3d-fluency/94/mail.png" alt="Email">
+                            </div>
+                            <div class="icon-back">
+                                <div class="icon-back-fallback"><i data-lucide="mail"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-card-details">
+                        <p>Email Enquiries</p>
+                        <p>gomezpeceservices@gmail.com</p>
+                    </div>
+                </a>
+
+                <a href="https://facebook.com/gomezpeceservices" target="_blank" class="info-card">
+                    <div class="info-card-icon">
+                        <div class="icon-flipper">
+                            <div class="icon-front">
+                                <img src="https://img.icons8.com/3d-fluency/94/facebook-new.png" alt="Facebook">
+                            </div>
+                            <div class="icon-back" style="background: var(--facebook-blue);">
+                                <div class="icon-back-fallback"><i data-lucide="facebook"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-card-details">
+                        <p>Facebook Page</p>
+                        <p>Gomez PECE Services</p>
+                    </div>
+                </a>
+
+                <div class="info-card">
+                    <div class="info-card-icon">
+                        <div class="icon-flipper">
+                            <div class="icon-front">
+                                <img src="https://img.icons8.com/3d-fluency/94/map-pin.png" alt="Location">
+                            </div>
+                            <div class="icon-back">
+                                <div class="icon-back-fallback"><i data-lucide="map"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-card-details">
+                        <p>Head Office</p>
+                        <p>Makati City, PH</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form + Map -->
+            <div class="form-and-map-column">
+                <div class="form-container">
+                    <div class="form-header">
+                        <h2>Send a Message</h2>
+                        <p>Briefly describe your project requirements and our team will get back to you within 24 hours.</p>
+                    </div>
+                    <form id="contactForm">
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label>Full Name</label>
+                                <input type="text" name="user_name" placeholder="Juan Dela Cruz" required>
+                            </div>
+                            <div class="input-group">
+                                <label>Email Address</label>
+                                <input type="email" name="user_email" placeholder="juan@example.com" required>
+                            </div>
+                        </div>
+                        <div class="input-group" style="margin-bottom: 16px;">
+                            <label>Subject</label>
+                            <input type="text" name="subject" placeholder="e.g. PEZA Certification / Sign & Seal" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Your Message</label>
+                            <textarea name="message" placeholder="Tell us more about your infrastructure or engineering needs..." required></textarea>
+                        </div>
+                        <div class="form-action-row">
+                            <button type="submit" id="submitBtn" class="submit-btn">
+                                <i data-lucide="send" size="14" stroke-width="2.5"></i>
+                                Send Inquiry
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="map-wrapper">
+                    <div class="map-heading">Our Location</div>
+                    <div class="map-frame-holder">
+                        <iframe
+                            src="https://maps.google.com/maps?q=Makati%20City,%20Marciana%20Building&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <img src="https://i.imgur.com/iF45eb9.png" alt="Gomez PECE Logo">
+                </div>
+                <p class="footer-about-text">
+                    Professional electronics engineering consultancy providing licensed technical evaluation and auxiliary system design across the Philippines.
+                </p>
+                <div class="footer-contact-box">
+                    <div class="footer-3d-icon-wrap">
+                        <img src="https://img.icons8.com/3d-fluency/94/facebook-new.png" alt="Facebook">
+                    </div>
+                    <div class="footer-contact-info">
+                        <p>Facebook Support</p>
+                        <a href="https://facebook.com/gomezpeceservices" target="_blank">Gomez PECE Services</a>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="footer-heading">Navigation</h4>
+                <ul class="footer-links-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="SERVICE1.html">Our Services</a></li>
+                    <li><a href="ABOUT1.html">About Company</a></li>
+                    <li><a href="CONTACT1.html">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="footer-heading">Office Locations</h4>
+                <div class="office-card">
+                    <div class="footer-contact-info">
+                        <p>Main Branch</p>
+                        <p>3613 Marciana Building Makati City</p>
+                    </div>
+                </div>
+                <div class="office-card">
+                    <div class="footer-contact-info">
+                        <p>Satellite Branch</p>
+                        <p>San Felipe, Cuenca Batangas</p>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="footer-heading">Email Enquiries</h4>
+                <div class="footer-contact-box">
+                    <div class="footer-3d-icon-wrap">
+                        <img src="https://img.icons8.com/3d-fluency/94/mail.png" alt="Email">
+                    </div>
+                    <div class="footer-contact-info">
+                        <p>Email Address</p>
+                        <a href="mailto:gomezpeceservices@gmail.com">gomezpeceservices@gmail.com</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 Gomez PECE Services. All rights reserved.</p>
+            <p>Regulated by the PRC | PECE Licensed</p>
+        </div>
+    </footer>
+
+    <!-- Message Us Modal -->
+    <div class="modal-overlay" id="contactInfoModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('contactInfoModal')">&times;</button>
+            <div style="margin-bottom: 25px;">
+                <h3 style="font-size: 22px; font-weight: 800; color: #111;">Message Us</h3>
+                <p style="font-size: 14px; color: #666; margin-top: 6px;">Choose your preferred contact channel below.</p>
+            </div>
+            <a href="https://facebook.com/gomezpeceservices" target="_blank" class="contact-card-item">
+                <div class="modal-3d-wrap">
+                    <img src="https://img.icons8.com/3d-fluency/94/facebook-new.png" alt="Facebook">
+                </div>
+                <div>
+                    <p>Facebook Page</p>
+                    <p>Gomez PECE Services</p>
+                </div>
+            </a>
+            <a href="tel:+639171803943" class="contact-card-item">
+                <div class="modal-3d-wrap">
+                    <img src="https://img.icons8.com/3d-fluency/94/phone-office.png" alt="Call">
+                </div>
+                <div>
+                    <p>Contact Number</p>
+                    <p>+63 917 180 3943</p>
+                </div>
+            </a>
+            <a href="mailto:gomezpeceservices@gmail.com" class="contact-card-item">
+                <div class="modal-3d-wrap">
+                    <img src="https://img.icons8.com/3d-fluency/94/mail.png" alt="Email">
+                </div>
+                <div>
+                    <p>Email Address</p>
+                    <p>gomezpeceservices@gmail.com</p>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        // URL Masking
+        try {
+            if (window.history && window.history.replaceState) {
+                if (window.location.protocol.startsWith('http')) {
+                    window.history.replaceState({}, document.title, "/Contact");
+                }
+            }
+        } catch (e) {}
+
+        // Mobile Menu
+        function toggleMobileMenu() {
+            const nav = document.getElementById('mobileNav');
+            const bg = document.getElementById('overlayBg');
+            const isActive = nav.classList.toggle('active');
+            bg.classList.toggle('active');
+            document.body.style.overflow = isActive ? 'hidden' : 'auto';
+        }
+        document.getElementById('overlayBg').onclick = toggleMobileMenu;
+
+        // Modal
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        window.onclick = (e) => {
+            if (e.target.classList.contains('modal-overlay')) closeModal(e.target.id);
+        }
+
+        // EmailJS Form Submit
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.innerHTML = 'Sending...';
+            emailjs.sendForm('service_17iwaox', 'template_wb28bpx', this)
+                .then(() => {
+                    alert('Your inquiry was successfully sent! We will contact you shortly.');
+                    this.reset();
+                }, (err) => {
+                    alert('Failed to send. Error: ' + JSON.stringify(err));
+                })
+                .finally(() => {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i data-lucide="send" size="14" stroke-width="2.5"></i> Send Inquiry';
+                    lucide.createIcons();
+                });
+        });
+    </script>
+</body>
+</html>
